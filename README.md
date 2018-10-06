@@ -1,13 +1,21 @@
 # Bare Metal Embedded Programming
 
     Board(s):    STM32-F031K6 (Digikey product page: https://bit.ly/2BZMY0b)
+    Chipset:     ARM Cortex-M0
     Language(s): Ada
     Toolchain:   GNAT (https://www.adacore.com/download choose ARM ELF version)
-    Debugger:    OpenOCD 0.10.0 (http://openocd.org/getting-openocd/)
+    Debugger:    OpenOCD v0.10.0 (http://openocd.org/getting-openocd/)
 
 
 "build.bat" runs a script to compile, link, and flash a program to the board.
 Script must be located in the project's directory to correctly operate.
+
+
+# Motivations
+STM32-F031K6 was choosen for the starting board because it has the simplest ARM Cortex-M chip available. 
+Since this is my first self directed embedded programming expirement (UVic's CSC 230 taught me the basics), it seemed prudent to use the
+simplest board possible with the least amount of gizmos. 
+And hey, it's the cheapest STM32 board too. It's got a user LED to start with, then can slap it into a bread board for more complex stuff.
 
 
 Ada was choosen for learning embedded programming simply because the syntax and type system make for more digestable code.
