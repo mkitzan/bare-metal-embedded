@@ -1,9 +1,9 @@
 # Bare Metal Embedded Programming
 
-Board(s):    STM32-F031K6 (Digikey product page: https://bit.ly/2BZMY0b)
-Language(s): Ada
-Toolchain:   GNAT (https://www.adacore.com/download choose ARM ELF version)
-Debugger:    OpenOCD 0.10.0 (http://openocd.org/getting-openocd/)
+    Board(s):    STM32-F031K6 (Digikey product page: https://bit.ly/2BZMY0b)
+    Language(s): Ada
+    Toolchain:   GNAT (https://www.adacore.com/download choose ARM ELF version)
+    Debugger:    OpenOCD 0.10.0 (http://openocd.org/getting-openocd/)
 
 
 "build.bat" runs a script to compile, link, and load a program to the board.
