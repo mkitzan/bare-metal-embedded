@@ -6,7 +6,7 @@
     Debugger:    OpenOCD 0.10.0 (http://openocd.org/getting-openocd/)
 
 
-"build.bat" runs a script to compile, link, and load a program to the board.
+"build.bat" runs a script to compile, link, and flash a program to the board.
 Script must be located in the project's directory to correctly operate.
 
 
