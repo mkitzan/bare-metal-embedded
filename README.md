@@ -12,10 +12,11 @@ Script must be located in the project's directory to correctly operate.
 
 
 # Motivations
-STM32-F031K6 was choosen for the starting board because it has the simplest ARM Cortex-M chip available. 
+STM32-F031K6 was choosen for the starting board, because it has the simplest ARM Cortex-M chip available. 
 Since this is my first self directed embedded programming expirement (UVic's CSC 230 taught me the basics), it seemed prudent to use the
 simplest board possible with the least amount of gizmos. 
-And hey, it's the cheapest STM32 board too. It's got a user LED to start with, then can slap it into a bread board for more complex stuff.
+And hey, it's the cheapest STM32 board too. 
+It's got a user LED to start with, then you can slap it into a bread board for more complex stuff.
 
 
 Ada was choosen for learning embedded programming simply because the syntax and type system make for more digestable code.
