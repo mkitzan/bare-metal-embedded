@@ -11,6 +11,9 @@
 Script must be located in the project's directory to correctly operate.
 
 
+Note: I am purposely not defining labels for the register masks/flags, because I find seeing the explicit hex values being applied to the registers better for learning.
+
+
 # Motivations
 STM32-F031K6 was choosen for the starting board, because it has the simplest ARM Cortex-M chip available. 
 Since this is my first self directed embedded programming expirement (UVic's CSC 230 taught me the basics), it seemed prudent to use the
