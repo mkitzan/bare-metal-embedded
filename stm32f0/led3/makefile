@@ -1,4 +1,4 @@
-# makefile for blink.adb
+# makefile for led3.adb
 # 10-05-2018
 
 CC=arm-eabi-gcc
