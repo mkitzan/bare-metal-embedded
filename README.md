@@ -10,6 +10,7 @@
 "build.bat" runs a script to compile, link, and flash a program to the board.
 Script must be located in the project's directory to correctly operate.
 
+
 # Motivations
 STM32-F031K6 was choosen for the starting board, because it has the simplest ARM Cortex-M chip available. 
 Since this is my first self directed embedded programming expirement (UVic's CSC 230 taught me the basics), it seemed prudent to use the
