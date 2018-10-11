@@ -7,7 +7,7 @@ void interrupt() {
     TIM2_SR   &= 0xfffffffe;
 }
 
-int main() {
+void main() {
     /*
      * Switch system clock over to pulse-locked loop set to flash RAM
      *      max speed (24mhz)
@@ -62,6 +62,4 @@ int main() {
 
     // interrupt will control LED blink
     for(;;);
-    
-    return 0;
 }

@@ -11,6 +11,4 @@ int main() {
     GPIOB_BSRR  |= 0x00000008;
     
     for(;;);
-    
-    return 0;
 }
