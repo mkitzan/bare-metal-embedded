@@ -1,7 +1,7 @@
 # makefile for led3.c
 # 10-10-2018
 
-CC=arm-eabi-gcc
+CC=arm-none-eabi-gcc
 CFLAGS=-c -mcpu=cortex-m0 -mthumb
 
 all: led3.o

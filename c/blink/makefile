@@ -1,7 +1,7 @@
 # makefile for blink.c
 # 10-11-2018
 
-CC=arm-eabi-gcc
+CC=arm-none-eabi-gcc
 CFLAGS=-c -mcpu=cortex-m0 -mthumb
 
 all: blink.o
