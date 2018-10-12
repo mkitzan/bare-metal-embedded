@@ -11,7 +11,9 @@
 Script must be located in the project's directory to correctly operate.
 
 
-Note: I am purposely not defining labels for the register masks/flags, because I find seeing the explicit hex values being applied to the registers better for learning.
+Note: I am purposely not defining labels for the register masks/flags, 
+because I find seeing the explicit hex values being applied to the registers better for learning.
+However, for similar reasons, any index or counter will be assigned decimal values.
 
 
 # Motivations

@@ -24,7 +24,7 @@ package body Morse_Code is
         loop
             for Char_Index in Message'range
             loop
-                Blip_Index := 2#0000#;
+                Blip_Index := 0;
                 Mask       := 2#0001#;
                 State      := 2#0100#;
                 
