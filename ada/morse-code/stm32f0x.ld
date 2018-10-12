@@ -4,7 +4,7 @@ OUTPUT_ARCH(arm)
 SECTIONS
 {
     /* change address of data start between programs */
-    .data 0x08000420 :
+    .data 0x080004d8 :
     {
         *(.data)
     }
@@ -36,8 +36,8 @@ SECTIONS
     /* STM32 F013K6 vector table */
     .vectors 0x08000000 :
     {
-        LONG(0x20001000)
-        LONG(main + 1) 
+        LONG(0x20001000) /* top of stack */
+        LONG(RESET + 1) /* reset handler */
         LONG(0)
         LONG(0)
         LONG(0)
@@ -67,7 +67,7 @@ SECTIONS
         LONG(0)
         LONG(0)
         LONG(0)
-        LONG(interrupt + 1) /* NVIC interrupt 15, TIM2 */
+        LONG(TIM2_IRQ_HANDLER + 1) /* NVIC interrupt 15, TIM2 */
         FILL(0)
     }
 
