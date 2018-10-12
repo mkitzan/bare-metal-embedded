@@ -1,5 +1,5 @@
-# ifndef _REGISTERS_H_
-# define _REGISTERS_H_
+#ifndef _REGISTERS_H_
+#define _REGISTERS_H_
 
 extern unsigned int TIM2_CR1;
 extern unsigned int TIM2_DIER;
@@ -24,4 +24,4 @@ extern unsigned int GPIOB_BSRR;
 extern unsigned int NVIC_ISER;
 extern unsigned int NVIC_IPR3;
 
-# endif
+#endif
