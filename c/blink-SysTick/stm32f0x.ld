@@ -18,7 +18,7 @@ SECTIONS
     .vectors 0x08000000 :
     {
         LONG(0x20001000)
-        LONG(RESET + 1)
+        LONG(main + 1)
         LONG(0)
         LONG(0)
         LONG(0)
@@ -32,7 +32,7 @@ SECTIONS
         LONG(0)
         LONG(0)
         LONG(0)
-        LONG(SYSTICK_HANDLER + 1)
+        LONG(interrupt + 1)
         FILL(0)
     }
 
