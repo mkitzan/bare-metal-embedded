@@ -31,7 +31,7 @@ struct __attribute__((__packed__)) morse {
 #define V { .signal = 0b1000, .length = 4 }
 #define W { .signal = 0b0110, .length = 3 }
 #define X { .signal = 0b1001, .length = 4 }
-#define Y { .signal = 0x1101, .length = 4 }
+#define Y { .signal = 0b1101, .length = 4 }
 #define Z { .signal = 0b0011, .length = 4 }
 
 #define SPACE { .signal = 0b0000, .length = 0 }
