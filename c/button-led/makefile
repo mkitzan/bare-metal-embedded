@@ -6,7 +6,7 @@ CFLAGS=-c -mcpu=cortex-m0 -mthumb
 
 all: button_led.o
 
-button_led.o: button_led.c
+button_led.o: button_led.c registers.h
 	$(CC) $(CFLAGS) button_led.c
 
 clean:
