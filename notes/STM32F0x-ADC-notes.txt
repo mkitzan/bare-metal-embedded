@@ -1,0 +1,98 @@
+STM32F0x ADC
+
+Order of Operations:
+    Set the configuration settings
+    Calibrate the ADC
+    Turn ADC on
+    Start ADC conversion
+        
+ADC On:
+    In RCC_APB2ENR 0x40021000 (offset 0x18)
+        ADCEN set = bit 9
+
+    In ADC_ISR 0x40012400 (offset 0x00)
+        ADRDY clr = bit 0
+    
+    In ADC_CR 0x40012400 (offset 0x08)
+        ADEN set = bit 0
+    
+    Wait until ADRDY (bit 0) is set
+    While waiting continue setting ADEN
+    
+ADC Off:
+(opt)In ADC_CR 0x40012400 (offset 0x08)
+        Check ADSTART (bit 2) = 0
+        
+        If ADSTART set
+            ADSTP clr = bit 4
+            Wait until ADSTP is set
+
+    In ADC_CR 0x40012400 (offset 0x08)
+        ADDIS set = bit 1
+    
+(opt)In ADC_CR 0x40012400 (offset 0x08)
+        Wait until ADEN is cleared
+
+(opt)In ADC_ISR 0x40012400 (offset 0x00)
+        ADRDY clr = bit 0
+
+Calibrate ADC:
+    In ADC_CR 0x40012400 (offset 0x08)
+        ADCAL set = bit 31
+        Wait until bit is cleared
+        
+ADC Start:
+    In ADC_CR 0x40012400 (offset 0x08)
+        ASTART set = bit 3
+        
+ADC Clock:
+    Two potential sources
+        Asynchronous source
+        APB source w/ pre-scalar (notes cover this version)
+        
+    In ADC_CFGR2 0x40012400 (offset 0x10)
+        CKMODE bits [0 .. 1] (starting @bit 30)
+            01 PCLCK / 2
+            10 PCLCK / 4
+            
+ADC Channels:
+    ADC channels match their matching GPIO port A pin (pin must be set to analog)
+    
+    In ADC_CHSELR 0x40012400 (offset 0x28)
+        bits [0 .. 15] are GPIO lines 0 .. 15
+        bits [16 .. 18] are internal inputs (temp, voltage, bat)
+        
+    Can scan for inputs w/ SCANDIR (pg235)
+    
+Sampling Time:
+    In ADC_SMPR 0x40012400 (offset 0x14)
+        SMP bits [0 .. 2] (starting @bit 0)
+        Sets number of ADC clock cycles to sample for
+
+Single or Continuous Conversion:
+    In ADC_CFGR1 0x40012400 (offset 0x0C)
+        CONT clr = bit 13 (single)
+        CONT set = bit 13 (continuous)
+    
+    EOC interrupt when conversion finished
+    EOSEQ when sequence of conversions finished
+    
+ADC Data:
+    In ADC_DR 0x40012400 (offset 0x40)
+        Read bits [0 .. 15] for conversion value
+
+ADC Interrupts:
+    Full descr. on pg253
+    
+    Enable interrupts
+    In ADC_IER 0x40012400 (offset 0x04)
+        EOCIE set = bit 2 (end of conversion)
+        EOSEQIE set = bit 3 (end of sequence)
+        
+    Check interrupt event
+    In ADC_ISR 0x40012400 (offset 0x00)
+        EOSEQ bit 3 set
+        EOC bit 2 set
+    
+    ADC_COMP @NVIC pos 12
+    
