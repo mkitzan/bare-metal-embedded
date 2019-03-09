@@ -27,7 +27,7 @@ SECTIONS
     .vectors 0x08000000 :
     {
         LONG(0x20001000)
-        LONG(main + 1)
+        LONG(RESET + 1)
         LONG(0)
         LONG(0)
         LONG(0)
@@ -41,7 +41,7 @@ SECTIONS
         LONG(0)
         LONG(0)
         LONG(0)
-        LONG(systick_interrupt + 1) /* NVIC interrupt SYSTICK */
+        LONG(SYSTICK_INTERRUPT + 1) /* NVIC interrupt SYSTICK */
         LONG(0)
         LONG(0)
         LONG(0)
@@ -54,7 +54,7 @@ SECTIONS
         LONG(0)
         LONG(0)
         LONG(0)
-        LONG(adc_interrupt + 1) /* NVIC interrupt 12 ADC_COMP */
+        LONG(ADC_INTERRUPT + 1) /* NVIC interrupt 12 ADC_COMP */
         FILL(0)
     }
 

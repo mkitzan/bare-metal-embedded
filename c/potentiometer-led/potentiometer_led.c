@@ -30,12 +30,13 @@ void main() {
     ADC_SMPR   |= 0x00000002;
     // select GPIO line 0 as input channel
     ADC_CHSELR |= 0x00000001;
+    
     // perform ADC calibration
-    ADC_CR     |= 0x80000000;
+    ADC_CR |= 0x80000000;
     while(ADC_CR & 0x80000000);
     // enable ADC
-    ADC_CR     |= 0x00000001;
-    while((ADC_ISR & 0x00000001) != 0);
+    ADC_CR |= 0x00000001;
+    while(!(ADC_ISR & 0x00000001));
 
     // set NVIC vector 12 (ADC_COMP) to lowest priority
     NVIC_IPR3 |= 0x000000C0;

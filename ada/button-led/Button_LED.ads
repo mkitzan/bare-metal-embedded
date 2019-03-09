@@ -38,17 +38,17 @@ package Button_LED is
     pragma Volatile(EXTI_PR);
     pragma Import(C, EXTI_PR, "EXTI_PR");
 
-    -- GPIO port B MODE register
+    -- GPIO port A MODE register
     GPIOA_MODER : Word;
     pragma Volatile(GPIOA_MODER);
     pragma Import(C, GPIOA_MODER, "GPIOA_MODER");
     
-    -- GPIO port B push-up pull-down register
+    -- GPIO port A push-up pull-down register
     GPIOA_PUPDR : Word;
     pragma Volatile(GPIOA_PUPDR);
     pragma Import(C, GPIOA_PUPDR, "GPIOA_PUPDR");
     
-    -- GPIO port B output data register
+    -- GPIO port A output data register
     GPIOA_ODR : Word;
     pragma Volatile(GPIOA_ODR);
     pragma Import(C, GPIOA_ODR, "GPIOA_ODR");
