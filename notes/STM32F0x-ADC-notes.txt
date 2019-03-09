@@ -17,7 +17,6 @@ ADC On:
         ADEN set = bit 0
     
     Wait until ADRDY (bit 0) is set
-    While waiting continue setting ADEN
     
 ADC Off:
 (opt)In ADC_CR 0x40012400 (offset 0x08)
@@ -61,8 +60,6 @@ ADC Channels:
     In ADC_CHSELR 0x40012400 (offset 0x28)
         bits [0 .. 15] are GPIO lines 0 .. 15
         bits [16 .. 18] are internal inputs (temp, voltage, bat)
-        
-    Can scan for inputs w/ SCANDIR (pg235)
     
 Sampling Time:
     In ADC_SMPR 0x40012400 (offset 0x14)
@@ -95,4 +92,5 @@ ADC Interrupts:
         EOC bit 2 set
     
     ADC_COMP @NVIC pos 12
+    When interrupt triggered set associated event flag bit in order to reset the event
     
