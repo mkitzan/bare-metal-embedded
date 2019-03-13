@@ -1,0 +1,49 @@
+text:
+    clr r0, r1
+    ld  r0, r0
+    inc r1, 1
+    ld  r1, r1
+    
+    clr r2
+    dec r2, 2
+    
+    // core loop
+    ifg r0, r1
+    ld  pc, r2
+    sub r0, r1
+    
+    // increment quotient counter
+    clr r2  
+    st  r2, r0
+    inc r2, 2
+    ld  r0, r2
+    inc r0, 1
+    st  r2, r0
+    
+    // jump program to loop again
+    clr r2
+    ld  r0, r2
+    dec r2, 1
+    ld  pc, r2
+    
+    // ending sequence
+    clr r2
+    dec r2, 1
+    inc r2, 4
+    ifn r0, r1  
+    ld  pc, r2  // divisor = dividend, one more loop  
+    inc r2, 2
+    st  r2, r0  // store remainder into mem addr 1
+    inc r2, 1
+    ld  r1, r2
+    clr r2
+    st  r2, r1  // store quotient into mem addr 0
+    dec pc, 1   // busy loop
+
+data:
+@0
+    31  // dividend @mem addr 0
+    5   // divisor  @mem addr 1
+@254
+    18  // program addr of ending sequence
+    3   // program addr of loop start
