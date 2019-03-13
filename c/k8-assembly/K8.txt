@@ -21,6 +21,8 @@ K8 assembler syntax:
 	@[number] used to specify the position in memory to place data at
 	Many @[number] specifiers may be used in the data segment
 
+Also, a Notepad++ language stylesheet is included (looks good with the Obsidian theme)!
+
 NOTE: bits rA rA and rB rB are the bits representing the register value used
 
 Store
