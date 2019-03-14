@@ -1,5 +1,5 @@
-#ifndef _K8_SIMULATOR_H_
-#define _K8_SIMULATOR_H_
+#ifndef _K8_PROGRAM_H_
+#define _K8_PROGRAM_H_
 
 const unsigned char TEXT[31] = {
 	113,  16, 196,  21, 123, 217, 177,  30, 

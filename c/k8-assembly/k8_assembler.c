@@ -229,7 +229,7 @@ void assemble(FILE *infile) {
 void build(FILE *outfile) {
     int i;
     
-    fprintf(outfile, "#ifndef _K8_SIMULATOR_H_\n#define _K8_SIMULATOR_H_\n\nconst unsigned char TEXT[%d] = {\n\t", pos);
+    fprintf(outfile, "#ifndef _K8_PROGRAM_H_\n#define _K8_PROGRAM_H_\n\nconst unsigned char TEXT[%d] = {\n\t", pos);
     
     for(i = 0; i < pos - 1; i++) {
         fprintf(outfile, "%3d, ", TEXT[i]);
@@ -268,7 +268,7 @@ int main(int argc, char *argv[]) {
     FILE *infile = fopen(argv[1], "r");
     
     // change file extension of input file
-    FILE *outfile = fopen("k8_simulator.h", "w");
+    FILE *outfile = fopen("k8_program.h", "w");
     
     // change file extension of input file
     // strncpy(&argv[1][len - 2], "bin", 4);
