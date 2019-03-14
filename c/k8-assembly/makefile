@@ -16,6 +16,7 @@ k8_assembler.o: k8_assembler.c
 
 k8: k8_assembler.o
 	gcc k8_assembler.o -o k8
+	rm k8_assembler.o
 
 clean:
 	rm *.o

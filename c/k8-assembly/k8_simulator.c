@@ -53,6 +53,18 @@ void exti23_interrupt() {
     }
 }
 
+void setup(unsigned char reg, unsigned char *store) {
+    if(reg = 0x00) {
+        store = &R0;
+    } else if(reg = 0x04) {
+        store = &R1;
+    } else if(reg = 0x08) {
+        store = &R2;
+    } else {
+        store = &PC;
+    }
+}
+
 void main() {
     // set registers
     PC = 0;
@@ -86,8 +98,79 @@ void main() {
     STK_CSR |= 0x00000007;
     
     for(;;) {
-        if(STATUS & 0xF0) {
-            // do work
+        if((STATUS & 0xF0) == 0xF0) {
+            setup((TEXT[PC] & 0x0C), reg1);
+            
+            if(TEXT[PC] & 0xC0) {
+                *reg2 = (TEXT[PC] & 0x03) + 1;
+            } else {
+                setup((TEXT[PC] & 0x03) << 2, reg2);
+            }
+            
+            switch(TEXT[PC] & 0xF0) {
+                case 0x00:
+                    DATA[*reg1] = *reg2;
+                    break;
+                case 0x10:
+                    *reg1 = DATA[*reg2];
+                    break;
+                case 0x20:
+                    *reg1 += *reg2;
+                    break;
+                case 0x30:
+                    *reg1 -= *reg2;
+                    break;
+                case 0x40:
+                    *reg1 &= *reg2;
+                    break;
+                case 0x50:
+                    *reg1 |= *reg2;
+                    break;
+                case 0x60:
+                    *reg1 != *reg1;
+                    if((TEXT[PC] & 0x03) == 0x03) {
+                        *reg2 != *reg2;
+                    }
+                    break;
+                case 0x70:
+                    *reg1 = 0;
+                    if((TEXT[PC] & 0x03) == 0x03) {
+                        *reg2 = 0;
+                    }
+                    break;
+                case 0x80:
+                    if(*reg1 == *reg2) {
+                        PC += 1;
+                    }
+                    break;
+                case 0x90:
+                    if(*reg1 != *reg2) {
+                        PC += 1;
+                    }
+                    break;
+                case 0xA0:
+                    if(*reg1 < *reg2) {
+                        PC += 1;
+                    }
+                    break;
+                case 0xB0:
+                    if(*reg1 > *reg2) {
+                        PC += 1;
+                    }
+                    break;
+                case 0xC0:
+                    *reg1 += *reg2;
+                    break;
+                case 0xD0:
+                    *reg1 -= *reg2;
+                    break;
+                case 0xE0:
+                    *reg1 <<= *reg1;
+                    break;
+                case 0xF0:
+                    *reg1 >>= *reg2;
+                    break;
+            }
             
             PC += 1;
             
