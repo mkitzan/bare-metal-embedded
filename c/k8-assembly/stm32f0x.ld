@@ -17,8 +17,8 @@ SECTIONS
     GPIOA_PUPDR = 0x4800000C;
     GPIOA_ODR   = 0x48000014;
     
-    STK_CSR     = 0xE000E010;
-    STK_RVR     = 0xE000E014;
+    STK_CSR = 0xE000E010;
+    STK_RVR = 0xE000E014;
     
     NVIC_ISER = 0xE000E100;
     NVIC_IPR1 = 0xE000E404;
@@ -47,7 +47,6 @@ SECTIONS
         LONG(0)
         LONG(0)
         LONG(exti01_interrupt + 1) /* NVIC interrupt 5, EXTI0_1 */
-        LONG(exti23_interrupt + 1) /* NVIC interrupt 6, EXTI2_3 */
         FILL(0)
     }
 
