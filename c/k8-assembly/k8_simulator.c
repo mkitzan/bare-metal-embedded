@@ -4,25 +4,26 @@
 
 void systick_interrupt() {
     // enable next step
-    STATUS |= 0xC0;
+    STATUS |= 0x80;
+    // clear double click counter
+    STATUS &= 0xF3;
 }
 
 void exti01_interrupt() {
     if(EXTI_PR & 0x00000001) {
-        // reset systick counter
-        STK_RVR = SIM_STEP;
-        // cycle register
-        STATUS = (STATUS & 0xFC) | ((STATUS + 1) & 0x03);
-        // clear EXTI1 event
-        EXTI_PR |= 0x00000001;
+        // cycle register and clear run
+        STATUS = (STATUS & 0xC0) | ((STATUS + 1) & 0x03);
     } else {
-        // reset systick counter
-        STK_RVR = SIM_STEP;
+        // counter for double click
+        STATUS += 0x08;
         // enable next step
-        STATUS |= 0x30;
-        // clear EXTI3 event
-        EXTI_PR |= 0x00000002;
+        STATUS |= 0x40;
     }
+    
+    // reset systick counter
+    STK_RVR = SIM_STEP;
+    // clear EXTI event
+    EXTI_PR |= EXTI_PR;
 }
 
 void store(unsigned char *loc, unsigned char reg) {
@@ -90,11 +91,11 @@ void main() {
     STK_CSR |= 0x00000007;
     
     for(;;) {
-        if(!(STATUS & 0xC0)) {
+        if(!(STATUS & 0x80)) {
             continue;
         }
         
-        if(STATUS & 0x30) {
+        if(STATUS & 0x60) {
             OP = TEXT[PC];
             load((OP & 0x0C), &RA);
             
@@ -176,7 +177,7 @@ void main() {
             }
             
             PC += 1;
-            STATUS &= 0x0F;
+            STATUS &= 0x3F;
         }
         
         if((STATUS & 0x03) == 0) {
