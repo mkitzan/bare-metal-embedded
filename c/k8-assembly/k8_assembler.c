@@ -4,7 +4,7 @@
 
 #define MAX_LINE    256
 #define MAX_TOKEN   5
-#define OUTPUT_MOD  16
+#define OUTPUT_MOD  8
 
 int pos = 0;
 unsigned char TEXT[MAX_LINE];
@@ -48,11 +48,11 @@ unsigned char argument(char *token, int n) {
     if(token[1] == '\0') {
         if(token[0] == '1') {
             return 0x00;
-        } else if(token[0] = '2') {
+        } else if(token[0] == '2') {
             return 0x04;
-        } else if(token[0] = '3') {
+        } else if(token[0] == '3') {
             return 0x08;
-        } else if(token[0] = '4') {
+        } else if(token[0] == '4') {
             return 0x0C;
         }
     } else if(!strncmp(token, "r0", 3)) {
@@ -144,11 +144,12 @@ unsigned char operation(char *token, int n) {
 
 void parse(char *tokens[], int n) {
     unsigned char op = 0x00;
+    
     op |= operation(tokens[0], n);
     op |= argument(tokens[1], n); 
     
     if(tokens[2]) {
-        if(!strncmp(tokens[2], "//", 3)) {
+        if(!strncmp(tokens[2], "//", 2)) {
             op |= 0x03;
         } else {
             op |= argument(tokens[2], n) >> 2;
@@ -171,7 +172,7 @@ int text(FILE *infile, int n) {
         
         tokens[0] = strtok(line, " \t\n,");
         
-        if(tokens[0] == NULL || !strncmp(tokens[0], "//", 3)) {
+        if(tokens[0] == NULL || !strncmp(tokens[0], "//", 2)) {
             continue;
         } else if(!strncmp(tokens[0], "data:", 6)) {
             return n;
@@ -194,7 +195,7 @@ void data(FILE *infile, int n) {
         n++;
         token = strtok(line, " \t\n");
         
-        if(token == NULL || !strncmp(token, "//", 3)) {
+        if(token == NULL || !strncmp(token, "//", 2)) {
             continue;
         } else if(token[0] == '@' && token[1]) {
             loc = atoi(&token[1]);
@@ -219,7 +220,7 @@ void assemble(FILE *infile) {
             break;
         }
         
-        if(strncmp(token, "//", 3)) {
+        if(strncmp(token, "//", 2)) {
             fail(n, 't');
         }
     }
@@ -233,17 +234,29 @@ void build(FILE *outfile) {
     fprintf(outfile, "#ifndef _K8_PROGRAM_H_\n#define _K8_PROGRAM_H_\n\nconst unsigned char TEXT[%d] = {\n\t", pos);
     
     for(i = 0; i < pos - 1; i++) {
-        fprintf(outfile, "%3d, ", TEXT[i]);
+        fprintf(outfile, "0x%02X, ", TEXT[i]);
         
         if(!((i + 1) % OUTPUT_MOD)) {
             fputs("\n\t", outfile);
         }
     }
-    fprintf(outfile, "%3d\n};\n\nunsigned char DATA[%d];\n\n/* Copy into simulator:\n", TEXT[i], MAX_LINE);
+    // fprintf(outfile, "0x%02X\n};\n\nunsigned char DATA[%d] = {\n\t", TEXT[i], MAX_LINE);
+    
+    // for(i = 0; i < MAX_LINE - 1; i++) {
+        // fprintf(outfile, "0x%02X, ", DATA[i]);
+        
+        // if(!((i + 1) % OUTPUT_MOD)) {
+            // fputs("\n\t", outfile);
+        // }
+    // }
+    
+    // fprintf(outfile, "0x%02X\n};\n\n#endif\n", DATA[i]);
+    
+    fprintf(outfile, "0x%02X\n};\n\nunsigned char DATA[%d];\n\n/* Copy into simulator:\n", TEXT[i], MAX_LINE);
     
     for(i = 0; i < MAX_LINE; i++) {
         if(DATA[i]) {
-            fprintf(outfile, "\tDATA[%d] = %d;\n", i, DATA[i]);
+            fprintf(outfile, "\tDATA[%d] = 0x%02X;\n", i, DATA[i]);
         }
     }
     

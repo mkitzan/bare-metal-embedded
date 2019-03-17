@@ -1,18 +1,20 @@
 #ifndef _K8_PROGRAM_H_
 #define _K8_PROGRAM_H_
 
-const unsigned char TEXT[31] = {
-	113,  16, 196,  21, 123, 217, 177,  30,  49, 123,   8, 201,  18, 192,   8, 123, 
-	 18, 216,  30, 123, 216, 201, 145,  30, 201,   8, 200,  22, 123,   9, 220
+const unsigned char TEXT[29] = {
+	0x71, 0x10, 0xC4, 0x15, 0x7B, 0xD9, 0xB1, 0x1E, 
+	0x31, 0x7B, 0x08, 0xC9, 0x12, 0xC0, 0x08, 0x7B, 
+	0x12, 0xD8, 0x1E, 0x7B, 0xCA, 0xCB, 0x91, 0x1E, 
+	0x76, 0x54, 0xC9, 0x12, 0xDC
 };
 
 unsigned char DATA[256];
 
 /* Copy into simulator:
-	DATA[0] = 31;
-	DATA[1] = 5;
-	DATA[254] = 18;
-	DATA[255] = 3;
+	DATA[0] = 0x07;
+	DATA[1] = 0x02;
+	DATA[254] = 0x12;
+	DATA[255] = 0x03;
 */
 
 #endif

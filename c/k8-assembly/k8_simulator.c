@@ -50,11 +50,12 @@ void load(unsigned char reg, unsigned char *loc) {
 }
 
 void main() {
-    // setup data (copy from k8_program.h)
-    DATA[0] = 31;
-	DATA[1] = 5;
-	DATA[254] = 18;
-	DATA[255] = 3;
+    // copy DATA from k8_program.h
+    DATA[0] = 0x07;
+    DATA[1] = 0x02;
+    DATA[2] = 0x00;
+    DATA[254] = 0x12;
+    DATA[255] = 0x03;
     
     // set registers
     RA = RB = OP = 0;
@@ -123,14 +124,14 @@ void main() {
                     RA |= RB;
                     break;
                 case 0x60:
-                    RA != RA;
-                    if((OP & 0x03) == 0x03) {
-                        RB != RB;
+                    RA = !RA;
+                    if((OP & 0x03) != 0x03) {
+                        RB = !RB;
                     }
                     break;
                 case 0x70:
                     RA = 0;
-                    if((OP & 0x03) == 0x03) {
+                    if((OP & 0x03) != 0x03) {
                         RB = 0;
                     }
                     break;
@@ -170,7 +171,7 @@ void main() {
             
             store(&RA, (OP & 0x0C));
             
-            if(!(OP & 0xC0)) {
+            if((OP & 0xE0) == 0x60 && (OP & 0x03) != 0x03) {
                 store(&RB, (OP & 0x03) << 2);
             }
             

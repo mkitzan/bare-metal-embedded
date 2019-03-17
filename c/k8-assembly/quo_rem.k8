@@ -28,22 +28,20 @@ text:
     
     // ending sequence
     clr r2
-    dec r2, 1
+    inc r2, 3
     inc r2, 4
     ifn r0, r1  
     ld  pc, r2  // divisor = dividend, one more loop  
+    clr r1, r2
+    or  r1, r0  // copy remainder into register 1
     inc r2, 2
-    st  r2, r0  // store remainder into mem addr 1
-    inc r2, 1
-    ld  r1, r2
-    clr r2
-    st  r2, r1  // store quotient into mem addr 0
+    ld  r0, r2  // load quotient into register 0
     dec pc, 1   // busy loop
 
 data:
 @0
-    31  // dividend @mem addr 0
-    5   // divisor  @mem addr 1
+    7  // dividend @mem addr 0
+    2   // divisor  @mem addr 1
 @254
     18  // program addr of ending sequence
     3   // program addr of loop start
