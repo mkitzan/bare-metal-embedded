@@ -4,6 +4,7 @@
 
 #define MAX_LINE    256
 #define MAX_TOKEN   5
+#define OUTPUT_MOD  16
 
 int pos = 0;
 unsigned char TEXT[MAX_LINE];
@@ -234,20 +235,19 @@ void build(FILE *outfile) {
     for(i = 0; i < pos - 1; i++) {
         fprintf(outfile, "%3d, ", TEXT[i]);
         
-        if(!((i + 1) % 8)) {
+        if(!((i + 1) % OUTPUT_MOD)) {
             fputs("\n\t", outfile);
         }
     }
-    fprintf(outfile, "%3d\n};\n\nunsigned char DATA[%d] = {\n\t", TEXT[i], MAX_LINE);
+    fprintf(outfile, "%3d\n};\n\nunsigned char DATA[%d];\n\n/* Copy into simulator:\n", TEXT[i], MAX_LINE);
     
-    for(i = 0; i < MAX_LINE - 1; i++) {
-        fprintf(outfile, "%3d, ", DATA[i]);
-        
-        if(!((i + 1) % 8)) {
-            fputs("\n\t", outfile);
+    for(i = 0; i < MAX_LINE; i++) {
+        if(DATA[i]) {
+            fprintf(outfile, "\tDATA[%d] = %d;\n", i, DATA[i]);
         }
     }
-    fprintf(outfile, "%3d\n};\n\n#endif\n", DATA[i]);
+    
+    fprintf(outfile, "*/\n\n#endif\n", DATA[i]);
 }
 
 int main(int argc, char *argv[]) {

@@ -3,19 +3,21 @@
 #include "registers.h"
 
 void systick_interrupt() {
-    // if in RUN mode, enable next step
+    // enable next step
     STATUS |= 0xC0;
 }
 
 void exti01_interrupt() {
     if(EXTI_PR & 0x00000001) {
+        // reset systick counter
+        STK_RVR = SIM_STEP;
         // cycle register
         STATUS = (STATUS & 0xFC) | ((STATUS + 1) & 0x03);
         // clear EXTI1 event
         EXTI_PR |= 0x00000001;
     } else {
-        // set systick counter to 1/8th second
-        STK_RVR = 0x000F4240;
+        // reset systick counter
+        STK_RVR = SIM_STEP;
         // enable next step
         STATUS |= 0x30;
         // clear EXTI3 event
@@ -24,11 +26,11 @@ void exti01_interrupt() {
 }
 
 void store(unsigned char *loc, unsigned char reg) {
-    if(reg = 0x00) {
+    if(reg == 0x00) {
         R0 = *loc;
-    } else if(reg = 0x04) {
+    } else if(reg == 0x04) {
         R1 = *loc;
-    } else if(reg = 0x08) {
+    } else if(reg == 0x08) {
         R2 = *loc;
     } else {
         PC = *loc;
@@ -36,11 +38,11 @@ void store(unsigned char *loc, unsigned char reg) {
 }
 
 void load(unsigned char reg, unsigned char *loc) {
-    if(reg = 0x00) {
+    if(reg == 0x00) {
         *loc = R0;
-    } else if(reg = 0x04) {
+    } else if(reg == 0x04) {
         *loc = R1;
-    } else if(reg = 0x08) {
+    } else if(reg == 0x08) {
         *loc = R2;
     } else {
         *loc = PC;
@@ -48,6 +50,12 @@ void load(unsigned char reg, unsigned char *loc) {
 }
 
 void main() {
+    // setup data (copy from k8_program.h)
+    DATA[0] = 31;
+	DATA[1] = 5;
+	DATA[254] = 18;
+	DATA[255] = 3;
+    
     // set registers
     RA = RB = OP = 0;
     PC = R0 = R1 = R2 = 0;
@@ -68,8 +76,8 @@ void main() {
     EXTI_RTSR |= 0x00000003;
     // disable interrupt triggers on falling-edge
     EXTI_FTSR &= 0xFFFFFFFC;
-    // set systick counter to 1/8th second
-    STK_RVR = 0x000F4240;
+    // set systick counter
+    STK_RVR = SIM_STEP;
     // set NVIC vector 5 lowest priority
     NVIC_IPR1 = 0x0000C000;
     
@@ -81,7 +89,11 @@ void main() {
     STK_CSR |= 0x00000007;
     
     for(;;) {
-        if((STATUS & 0xF0) == 0xF0) {
+        if(!(STATUS & 0xC0)) {
+            continue;
+        }
+        
+        if(STATUS & 0x30) {
             OP = TEXT[PC];
             load((OP & 0x0C), &RA);
             
@@ -89,7 +101,7 @@ void main() {
                 RB = (OP & 0x03) + 1;
             } else {
                 load((OP & 0x03) << 2, &RB);
-            } 
+            }
             
             switch(OP & 0xF0) {
                 case 0x00:

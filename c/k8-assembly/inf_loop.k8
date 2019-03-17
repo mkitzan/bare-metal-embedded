@@ -1,0 +1,7 @@
+text:
+    clr r0
+    inc r0, 1
+    dec pc, 2
+    
+data:
+    
