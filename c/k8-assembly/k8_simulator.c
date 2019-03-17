@@ -51,12 +51,8 @@ void load(unsigned char reg, unsigned char *loc) {
 }
 
 void main() {
-    // copy DATA from k8_program.h
-    DATA[0] = 0x07;
-    DATA[1] = 0x02;
-    DATA[2] = 0x00;
-    DATA[254] = 0x12;
-    DATA[255] = 0x03;
+    // hook to k8_program to init data section
+    init_data();
     
     // set registers
     RA = RB = OP = 0;

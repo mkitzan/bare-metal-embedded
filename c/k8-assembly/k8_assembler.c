@@ -231,7 +231,13 @@ void assemble(FILE *infile) {
 void build(FILE *outfile) {
     int i;
     
-    fprintf(outfile, "#ifndef _K8_PROGRAM_H_\n#define _K8_PROGRAM_H_\n\nconst unsigned char TEXT[%d] = {\n\t", pos);
+    fprintf(outfile, "#ifndef _K8_PROGRAM_H_\n#define _K8_PROGRAM_H_\n\nextern const unsigned char TEXT[%d];\n\n", pos);
+    fprintf(outfile, "unsigned char DATA[%d];\n\nvoid init_data();\n\n#endif\n", MAX_LINE);
+    
+    fclose(outfile);
+    outfile = fopen("k8_program.c", "w");
+    
+    fprintf(outfile, "#include \"k8_program.h\"\n\nconst unsigned char TEXT[%d] = {\n\t", pos);
     
     for(i = 0; i < pos - 1; i++) {
         fprintf(outfile, "0x%02X, ", TEXT[i]);
@@ -240,19 +246,8 @@ void build(FILE *outfile) {
             fputs("\n\t", outfile);
         }
     }
-    // fprintf(outfile, "0x%02X\n};\n\nunsigned char DATA[%d] = {\n\t", TEXT[i], MAX_LINE);
     
-    // for(i = 0; i < MAX_LINE - 1; i++) {
-        // fprintf(outfile, "0x%02X, ", DATA[i]);
-        
-        // if(!((i + 1) % OUTPUT_MOD)) {
-            // fputs("\n\t", outfile);
-        // }
-    // }
-    
-    // fprintf(outfile, "0x%02X\n};\n\n#endif\n", DATA[i]);
-    
-    fprintf(outfile, "0x%02X\n};\n\nunsigned char DATA[%d];\n\n/* Copy into simulator:\n", TEXT[i], MAX_LINE);
+    fprintf(outfile, "0x%02X\n};\n\nvoid init_data() {\n", TEXT[i], MAX_LINE);
     
     for(i = 0; i < MAX_LINE; i++) {
         if(DATA[i]) {
@@ -260,7 +255,7 @@ void build(FILE *outfile) {
         }
     }
     
-    fprintf(outfile, "*/\n\n#endif\n", DATA[i]);
+    fprintf(outfile, "}\n", DATA[i]);
 }
 
 int main(int argc, char *argv[]) {

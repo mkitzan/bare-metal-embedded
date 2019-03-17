@@ -4,11 +4,14 @@
 CC=arm-none-eabi-gcc
 CFLAGS=-c -mcpu=cortex-m0 -mthumb
 
-all: k8_simulator.o
+all: k8_simulator.o k8_program.o
 
 assembler: k8
 
-k8_simulator.o: k8_simulator.c k8_simulator.h registers.h
+k8_program.o: k8_program.h k8_program.c
+	$(CC) $(CFLAGS) k8_program.c
+
+k8_simulator.o: k8_simulator.c k8_simulator.h registers.h k8_program.h
 	$(CC) $(CFLAGS) k8_simulator.c
     
 k8_assembler.o: k8_assembler.c
