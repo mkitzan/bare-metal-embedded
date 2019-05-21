@@ -105,26 +105,26 @@ Increment
 	inc rA, value	[1 1 0 0] [rA rA] [v0 v1]
 
 	Adds value (1 to 4) to rA
-	NOTE: when encoding, bits v0 v1 are value - 1.
+	NOTE: when encoding, bits v0 v1 are value + 1.
 		If value is 3, the encoding is v0 = 1 and v1 = 0
 
 Decrement
 	dec rA, value	[1 1 0 1] [rA rA] [v0 v1]
 
 	Subtracts value (1 to 4) from rA
-	NOTE: when encoding, bits v0 v1 are value - 1.
+	NOTE: when encoding, bits v0 v1 are value + 1.
 		If value is 3, the encoding is v0 = 1 and v1 = 0
 
 Shift Left
 	shl rA, value	[1 1 1 0] [rA rA] [v0 v1]
 
 	Shifts value of rA to the left by value (1 to 4)
-	NOTE: when encoding bits v0 v1 are value - 1.
+	NOTE: when encoding bits v0 v1 are value + 1.
 		If value is 3, the encoding is v0 = 1 and v1 = 0
 
 Shift Right
 	shr rA, value	[1 1 1 1] [rA rA] [v0 v1]
 
 	Shifts value of rA to the right by value (1 to 4)
-	NOTE: when encoding bits v0 v1 are value - 1.
+	NOTE: when encoding bits v0 v1 are value + 1.
 		If value is 3, the encoding is v0 = 1 and v1 = 0
