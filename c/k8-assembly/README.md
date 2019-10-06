@@ -17,11 +17,11 @@ Language has four registers
 Formating notes:
 
 - Bits rA rA and rB rB represent the register value used in encoded opcode
-- A register representing an address will have a ~*~ in front of it
+- A register representing an address will have a **\*** in front of it
 - Bits v0 v1 encode an immediate value but is offset by one such that the two bits represent values 1 to 4
 
 | Operation | Syntax | Opcode | Explanation |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | Store | st *rA, rB | [0 0 0 0] [rA rA rB rB] | Store the value of register rB into the memory address of rA. |
 | Load | ld rA, *rB | [0 0 0 1] [rA rA rB rB] | Load the value at the memory address of rB into rA. |
 | Add | add rA, rB | [0 0 1 0] [rA rA rB rB] | Adds values rA and rB, storing the result into rA. The carry bit is lost. |
@@ -44,7 +44,7 @@ Formating notes:
 ## Program Structure
 
 The following list describes the expected syntax of K8 programs by the assembler.
-Refer to ~quo_rem.k8~ for a concrete example of the syntax.
+Refer to **quo_rem.k8** for a concrete example of the syntax.
 
 K8 assembler syntax:
 
@@ -56,15 +56,15 @@ K8 assembler syntax:
 
 ## Assembling and Simulating
 
-This sub repo contains an assembler and simulator for the K8 assembly language. By running the ~make assembler~, an executable for
-~k8_assembler.c~. By further running ~k8 (program).k8~, your K8 assembly code will be assembled into a header file used by the simulator.
+This sub repo contains an assembler and simulator for the K8 assembly language. By running the **make assembler**, an executable for
+**k8_assembler.c**. By further running **k8 (program).k8**, your K8 assembly code will be assembled into a header file used by the simulator.
 
 This is a repo for bare-metal programming, so the simulator was written to run on an ARM microcontroller and be operated through buttons.
 With a wired up STM32-F031K6 like in the provided wiring diagram, the simulator is operated in the following way:
 
-- Each time the button wired to ~pin A1~ is pressed, the program will be stepped forward by one instruction.
-- Double clicking the button wired to ~pin A1~ will automatically run each instruction.
-- When the program is not running automatically, pushing the button wired to ~pin A0~ will cycle through the contents of each register on the eight LEDs.
+- Each time the button wired to **pin A1** is pressed, the program will be stepped forward by one instruction.
+- Double clicking the button wired to **pin A1** will automatically run each instruction.
+- When the program is not running automatically, pushing the button wired to **pin A0** will cycle through the contents of each register on the eight LEDs.
 
 ## Programming Patterns
 
@@ -72,5 +72,5 @@ Jumps in K8 are performed by operations on the program counter itself.
 There are no "add immediate" type operations, so all static data must be pre-loaded and stored in the data section.
 To make the static data easily accessible, it should be loaded at both the very top and bottom of the data section.
 Which is to say located close to address 0 and 256.
-Both ~inc~ and ~dec~ instructions can scale a register by a value between one and four inclusive.
-By incrementing or decrementing a register of value zero can allow a programmer to easily access nine memory addresses with a single ~inc~ or ~dec~ instruction. The ~quo_rem.k8~ example program displays this idiom.
+Both **inc** and **dec** instructions can scale a register by a value between one and four inclusive.
+By incrementing or decrementing a register of value zero can allow a programmer to easily access nine memory addresses with a single **inc** or **dec** instruction. The **quo_rem.k8** example program displays this idiom.
